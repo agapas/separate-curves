@@ -22,7 +22,7 @@ bl_info = {
     "name": "Separate Curve Object",
     "author": "Agnieszka Pas",
     "version": (1, 1, 0),
-    "blender": (2, 79, 0),
+    "blender": (2, 80, 0),
     "location": "View3D > Tools Panel > Tools Tab > Edit",
     "warning": "",
     "description": "Separate active curve object by loose parts",
@@ -34,9 +34,9 @@ import bpy
 from bpy.types import Operator
 
 
-class SeparateCurveOperator(Operator):
+class SCO_OT_operator(Operator):
     """Separate active curve object by loose parts"""
-    bl_idname = "curve.separate_loose"
+    bl_idname = "curve.SCO_OT_operator"
     bl_label = "By Loose Parts"
     bl_options = {'REGISTER', 'UNDO'}
 
@@ -62,23 +62,9 @@ class SeparateCurveOperator(Operator):
             bpy.ops.object.mode_set(mode='OBJECT')
             return {'FINISHED'}
 
+classes = (SCO_OT_operator)
 
-def draw_separate_loose(self, context):
-    layout = self.layout
-    col = layout.column()
-    col.label(text="Separate Curve:")
-    col.operator("curve.separate_loose")
-
-
-def register():
-    bpy.utils.register_module(__name__)
-    bpy.types.VIEW3D_PT_tools_object.append(draw_separate_loose)
-
-
-def unregister():
-    bpy.types.VIEW3D_PT_tools_object.remove(draw_separate_loose)
-    bpy.utils.unregister_module(__name__)
-
+register, unregister = bpy.utils.register_classes_factory(classes)
 
 if __name__ == "__main__":
     register()
