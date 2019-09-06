@@ -34,9 +34,9 @@ import bpy
 from bpy.types import Operator
 
 
-class SCO_OT_operator(Operator):
+class SCO_OT_operator(bpy.types.Operator):
     """Separate active curve object by loose parts"""
-    bl_idname = "curve.SCO_OT_operator"
+    bl_idname = "curve.sco"
     bl_label = "By Loose Parts"
     bl_options = {'REGISTER', 'UNDO'}
 
@@ -62,9 +62,25 @@ class SCO_OT_operator(Operator):
             bpy.ops.object.mode_set(mode='OBJECT')
             return {'FINISHED'}
 
-classes = (SCO_OT_operator)
+class SCO_PT_panel(bpy.types.Panel):
+    bl_label = "SCO"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = "SCO"
+
+    @classmethod
+    def poll(cls, context):
+        obj = context.active_object
+        return (obj and obj.type == 'CURVE')
+
+    def draw(self, context):
+        layout = self.layout
+        layout.operator('curve.sco',text="Separate by loose parts")
+
+classes = (
+    SCO_OT_operator,
+    SCO_PT_panel,
+)
 
 register, unregister = bpy.utils.register_classes_factory(classes)
 
-if __name__ == "__main__":
-    register()
