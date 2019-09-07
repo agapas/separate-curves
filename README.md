@@ -1,5 +1,5 @@
 # separate-curves
-Blender addon for splitting curve into separated objects by loose parts. It's interface can be found at the very bottom of the Edit part in Tools Panel.
+Blender addon for splitting curve into separated objects by loose parts. It's interface can be found in Sidebar on the right, in SCO Panel.
 
 Images below display the addon in action:
 

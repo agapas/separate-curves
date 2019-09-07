@@ -21,9 +21,9 @@
 bl_info = {
     "name": "Separate Curve Object",
     "author": "Agnieszka Pas",
-    "version": (1, 1, 0),
+    "version": (2, 0, 0),
     "blender": (2, 80, 0),
-    "location": "View3D > Tools Panel > Tools Tab > Edit",
+    "location": "View3D > Sidebar > SCO Tab > SCO",
     "warning": "",
     "description": "Separate active curve object by loose parts",
     "category": "Curve",
@@ -31,10 +31,10 @@ bl_info = {
 
 
 import bpy
-from bpy.types import Operator
+from bpy.types import Operator, Panel
 
 
-class SCO_OT_operator(bpy.types.Operator):
+class SCO_OT_operator(Operator):
     """Separate active curve object by loose parts"""
     bl_idname = "curve.sco"
     bl_label = "By Loose Parts"
@@ -62,7 +62,7 @@ class SCO_OT_operator(bpy.types.Operator):
             bpy.ops.object.mode_set(mode='OBJECT')
             return {'FINISHED'}
 
-class SCO_PT_panel(bpy.types.Panel):
+class SCO_PT_panel(Panel):
     bl_label = "SCO"
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
@@ -75,7 +75,8 @@ class SCO_PT_panel(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        layout.operator('curve.sco',text="Separate by loose parts")
+        layout.label(text="Separate Curve:")
+        layout.operator('curve.sco')
 
 classes = (
     SCO_OT_operator,
@@ -83,4 +84,3 @@ classes = (
 )
 
 register, unregister = bpy.utils.register_classes_factory(classes)
-
