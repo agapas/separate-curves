@@ -21,7 +21,7 @@
 bl_info = {
     "name": "Separate Curve Object",
     "author": "Agnieszka Pas",
-    "version": (2, 0, 0),
+    "version": (2, 1, 0),
     "blender": (2, 80, 0),
     "location": "View3D > Sidebar > SCO Tab > SCO",
     "warning": "",
@@ -41,26 +41,23 @@ class SCO_OT_operator(Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        active = context.active_object
-        if active is None:
-            self.report({'WARNING'}, "Select a curve object")
-            return {'CANCELLED'}
-        else:
-            splines = active.data.splines
-            bpy.ops.object.mode_set(mode='EDIT')
-            bpy.ops.curve.select_all(action = 'DESELECT')
+        layer = context.view_layer
+        active = layer.objects.active
+        splines = active.data.splines
+        bpy.ops.object.mode_set(mode='EDIT', toggle=False)
+        bpy.ops.curve.select_all(action='DESELECT')
 
-            while len(splines) > 1:
-                spline = splines[0]
-                if spline.bezier_points:
-                    spline.bezier_points[0].select_control_point = True
-                elif spline.points:
-                    spline.points[0].select = True
-                bpy.ops.curve.select_linked()
-                bpy.ops.curve.separate()
+        while len(splines) > 1:
+            spline = splines[0]
+            if spline.bezier_points:
+                spline.bezier_points[0].select_control_point = True
+            elif spline.points:
+                spline.points[0].select = True
+            bpy.ops.curve.select_linked()
+            bpy.ops.curve.separate()
 
-            bpy.ops.object.mode_set(mode='OBJECT')
-            return {'FINISHED'}
+        bpy.ops.object.mode_set(mode='OBJECT', toggle=False)
+        return {'FINISHED'}
 
 class SCO_PT_panel(Panel):
     bl_label = "SCO"
@@ -70,8 +67,8 @@ class SCO_PT_panel(Panel):
 
     @classmethod
     def poll(cls, context):
-        obj = context.active_object
-        return (obj and obj.type == 'CURVE')
+        active = context.view_layer.objects.active
+        return (active and active.type == 'CURVE')
 
     def draw(self, context):
         layout = self.layout
