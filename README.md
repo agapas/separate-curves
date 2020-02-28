@@ -10,6 +10,9 @@ Images below display the addon in action:
 <img src="https://raw.githubusercontent.com/agapas/separate-curves/master/images/after.png" width="850"/>
 
 
+### Blender version:
+Updated to Blender 2.80 and tested on versions: 2.80, 2.81 and 2.82 (windows64).
+
 ### Installing
 
 * go to: File/User Preferences/Add-ons and click 'Install Add-on from File...'
