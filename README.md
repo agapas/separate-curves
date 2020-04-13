@@ -17,8 +17,11 @@ Updated to Blender 2.80 and tested on versions: 2.80, 2.81 and 2.82 (windows64).
 
 * go to: File/User Preferences/Add-ons and click 'Install Add-on from File...'
 * select the ZIP you downloaded and click 'Install Add-on from File...'
-* enable the addon (it can be found in 'Curve' category)
+* enable the addon (it can be found in 'Curve' category) in the Edit/Prefferences
 * save user settings to keep addon enabled over multiple blender sessions
+
+NOTE:
+In the case if the installation guide above doesn't work, just unzip downloaded ZIP manually and copy the separate_curves.py script to blender's addons folder, and then enable the addon in the Edit/Prefferences.
 
 ## License
 
